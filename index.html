@@ -227,6 +227,12 @@ const total = quantidade * valorNumero;
 const nome = document.getElementById("nome").value;
 
 const telefone = document.getElementById("telefone").value;
+
+if(nome.trim() === "" || telefone.trim() === ""){
+alert("Preencha seu nome e WhatsApp!");
+return;
+}
+
 const mensagem =
 `Olá!
 
