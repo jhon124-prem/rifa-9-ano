@@ -23,7 +23,6 @@ color:white;
 .container{
 max-width:900px;
 margin:auto;
-padding:0 10px;
 }
 
 .card{
@@ -36,6 +35,12 @@ margin-bottom:20px;
 
 h1{font-size:3rem;margin-bottom:10px;}
 .sub{font-size:1.2rem;margin-bottom:15px;}
+
+.valor{
+font-size:2rem;
+font-weight:bold;
+margin-top:10px;
+}
 
 .numeros{
 display:grid;
@@ -89,6 +94,12 @@ cursor:pointer;
 
 button:hover{opacity:.9;}
 
+.qr{
+max-width:250px;
+border-radius:15px;
+margin-top:15px;
+}
+
 </style>
 </head>
 
@@ -96,33 +107,55 @@ button:hover{opacity:.9;}
 
 <div class="container">
 
+<!-- 🔵 TOPO ORIGINAL -->
 <div class="card">
 <h1>🎟️ Rifa 9º Ano</h1>
 <p class="sub">Em prol do nosso projeto de viagem</p>
+
+<div class="valor">R$ 8,00 por número</div>
+
+<p style="margin-top:10px;">🔥 Apenas 100 números disponíveis!</p>
+<h3 style="margin-top:10px;">📅 Sorteio: 01/07</h3>
 </div>
 
+<!-- 🔵 NÚMEROS -->
 <div class="card">
 <h2>Escolha seus números</h2>
 <p id="selecionados">Nenhum número selecionado</p>
 <div class="numeros" id="numeros"></div>
 </div>
 
+<!-- 🔵 DADOS -->
 <div class="card">
 <h2>Dados do Comprador</h2>
-<input id="nome" placeholder="Nome">
+
+<input id="nome" placeholder="Nome Completo">
 <input id="telefone" placeholder="WhatsApp">
+
 <br>
+
 <button id="reservar">Reservar Números</button>
+</div>
+
+<!-- 🔵 PIX -->
+<div class="card">
+<h2>💳 PIX</h2>
+<p><strong>Valentina Santos Ferreira</strong></p>
+<p>CPF: 114.354.385-82</p>
+
+<img src="1fe7cdfa-6648-490b-9452-fa97b360f041.jpeg" class="qr">
 </div>
 
 </div>
 
 <script>
 const numerosDiv = document.getElementById("numeros");
+
 let escolhidos = [];
 let vendidos = [];
 const valorNumero = 8;
 
+// 🔥 carregar vendidos
 fetch("vendidos.json")
 .then(r => r.json())
 .then(data => {
@@ -179,14 +212,16 @@ const nome = document.getElementById("nome").value;
 const tel = document.getElementById("telefone").value;
 
 if(!nome || !tel){
-  alert("Preencha os dados!");
+  alert("Preencha seus dados!");
   return;
 }
 
 const total = escolhidos.length * valorNumero;
 
 const msg =
-`Nome: ${nome}
+`🎟️ NOVA RESERVA
+
+Nome: ${nome}
 WhatsApp: ${tel}
 Números: ${escolhidos.map(n=>String(n).padStart(2,"0")).join(", ")}
 Total: R$ ${total}`;
