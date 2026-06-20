@@ -220,11 +220,21 @@ return;
 
 const total = quantidade * valorNumero;
 
-alert(
-"Você escolheu: " + escolhidos.join(", ") +
-"\n\nQuantidade: " + quantidade +
-"\nTotal: R$ " + total.toFixed(2).replace(".", ",")
+const mensagem =
+`Olá!
+
+Gostaria de reservar os números:
+
+${escolhidos.join(", ")}
+
+Quantidade: ${quantidade}
+Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+
+window.open(
+"https://wa.me/5573981736000?text=${encodeURIComponent(mensagem)}",
+"_blank"
 );
+
 
 };
 </script>
