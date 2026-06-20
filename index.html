@@ -128,6 +128,9 @@ R$ 8,00 por número
 </div>
 <div class="card">
 <h2>Escolha seus números</h2>
+<p id="selecionados">
+Nenhum número selecionado
+</p>
 <div class="numeros" id="numeros"></div>
 </div>
 <div class="card">
@@ -174,10 +177,31 @@ document.createElement("div");
 div.className="numero";
 div.innerText =
 String(i).padStart(2,"0");
+let escolhidos=[];
+
 div.onclick=()=>{
-div.classList.toggle(
-"selecionado"
+
+div.classList.toggle("selecionado");
+
+if(div.classList.contains("selecionado")){
+escolhidos.push(
+String(i).padStart(2,"0")
 );
+}else{
+escolhidos=
+escolhidos.filter(
+n=>n!==String(i).padStart(2,"0")
+);
+}
+
+document.getElementById(
+"selecionados"
+).innerText=
+
+escolhidos.length
+? "Você escolheu: " + escolhidos.join(", ")
+: "Nenhum número selecionado";
+
 };
 numeros.appendChild(div);
 }
