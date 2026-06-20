@@ -235,7 +235,10 @@ Gostaria de reservar os números:
 ${escolhidos.join(", ")}
 
 Quantidade: ${quantidade}
-Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+Total: R$ ${total.toFixed(2).replace(".", ",")}
+
+Nome: ${nome}
+WhatsApp: ${telefone}`;
 
 window.open(
 `https://wa.me/5573981736000?text=${encodeURIComponent(mensagem)}`,
