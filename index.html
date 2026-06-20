@@ -4,201 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rifa 9º Ano</title>
+
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
 body{
-background:linear-gradient(135deg,#009c3b,#ffdf00,#002776);
-padding:20px;
-text-align:center;
-color:white;
+  font-family: Arial;
+  background: linear-gradient(135deg,#009c3b,#ffdf00,#002776);
+  text-align:center;
+  color:white;
+  padding:20px;
 }
-.container{
-max-width:900px;
-margin:auto;
-padding:0 10px;
-}
-.card{
-background:rgba(0,0,0,.25);
-backdrop-filter:blur(5px);
-padding:20px;
-border-radius:20px;
-margin-bottom:20px;
-}
-h1{
-font-size:3rem;
-margin-bottom:10px;
-}
-.sub{
-font-size:1.2rem;
-margin-bottom:15px;
-}
-.premio{
-font-size:1.4rem;
-line-height:2;
-font-weight:bold;
-}
-.valor{
-font-size:2rem;
-font-weight:bold;
-color:#fff;
-margin-top:10px;
-}
+
 .numeros{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:8px;
-margin-top:20px;
-width:100%;
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;
+  margin-top:20px;
 }
+
 .numero{
-background:white;
-color:black;
-padding:10px 0;
-border-radius:10px;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
+  background:white;
+  color:black;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
 }
-.numero:hover{
-transform:scale(1.05);
-}
+
 .numero.selecionado{
-background:#00c853;
-color:white;
-}
-input{
-width:100%;
-max-width:450px;
-padding:15px;
-border:none;
-border-radius:10px;
-margin:8px;
-font-size:16px;
-}
-button{
-padding:15px 25px;
-border:none;
-border-radius:10px;
-background:#00c853;
-color:white;
-font-size:18px;
-cursor:pointer;
-}
-button:hover{
-opacity:.9;
-}
-.qr{
-max-width:250px;
-width:100%;
-border-radius:15px;
-margin:15px auto;
-display:block;
-}
-.whats{
-font-size:18px;
-line-height:1.8;
-}
-footer{
-margin-top:20px;
-font-size:14px;
+  background:#00c853;
+  color:white;
 }
 
-@media(min-width:768px){
-.numeros{
-grid-template-columns:repeat(10,1fr);
+.numero.vendido{
+  background:red;
+  color:white;
+  pointer-events:none;
 }
-}
-
 </style>
 </head>
+
 <body>
-<div class="container">
-<div class="card">
-<h1>🎟️ Rifa 9º Ano</h1>
-<p class="sub">
-Em prol do nosso projeto de viagem
-</p>
-<div class="premio">
 
-🏆 1 Camisa Oficial da Seleção Brasileira
+<h1>Rifa 9º Ano</h1>
 
-<br><br>
+<p id="selecionados">Nenhum número selecionado</p>
 
-⚽ 1 Kit Torcedor do Brasil
-
-<br>
-
-(Boné, bandeira, pulseira e brindes)
-
-</div>
-<div class="valor">
-R$ 8,00 por número
-</div>
-<p style="margin-top:10px;font-size:18px;">
-🔥 Apenas 100 números disponíveis!
-</p>
-<h3 style="margin-top:15px;">
-📅 Sorteio: 01/07
-</h3>
-</div>
-<div class="card">
-<h2>Escolha seus números</h2>
-<p id="selecionados">
-Nenhum número selecionado
-</p>
 <div class="numeros" id="numeros"></div>
-</div>
-<div class="card">
-<h2>Dados do Comprador</h2>
 
-<input id="nome" type="text" placeholder="Nome Completo">
+<input id="nome" placeholder="Nome"><br><br>
+<input id="telefone" placeholder="WhatsApp"><br><br>
 
-<br>
+<button id="reservar">Reservar</button>
 
-<input id="telefone" type="tel" placeholder="WhatsApp">
-
-<button id="reservar">
-Reservar Números
-</button>
-</div>
-<div class="card">
-<h2>💳 PIX</h2>
-<p><strong>Valentina Santos Ferreira</strong></p>
-<p>CPF: 114.354.385-82</p>
-<img src="1fe7cdfa-6648-490b-9452-fa97b360f041.jpeg" class="qr" alt="QR Code PIX">
-<div class="whats">
-
-📱 Jhon: (73) 98173-6000
-
-<br>
-
-📱 Marcella: (73) 98809-6646
-
-</div>
-<p style="margin-top:15px;">
-Após o pagamento envie o comprovante pelo WhatsApp.
-</p>
-</div>
-<footer>
-
-Rifa 9º Ano • Projeto de Viagem
-
-</footer>
 <script>
-const numeros = document.getElementById("numeros");
+const numerosDiv = document.getElementById("numeros");
+
 let escolhidos = [];
 let vendidos = [];
+
 const valorNumero = 8;
 
+// 🔥 CARREGA O JSON PRIMEIRO
 fetch("vendidos.json")
-  .then(res => res.json())
+  .then(r => r.json())
   .then(data => {
-    vendidos = data || [];
+    vendidos = data;
     criarNumeros();
   })
   .catch(() => {
@@ -206,89 +75,68 @@ fetch("vendidos.json")
     criarNumeros();
   });
 
-function criarNumeros() {
+function criarNumeros(){
 
-  for (let i = 1; i <= 100; i++) {
-
-    const numero = i;
+  for(let i=1;i<=100;i++){
 
     const div = document.createElement("div");
     div.className = "numero";
-    div.innerText = String(numero).padStart(2, "0");
+    div.innerText = String(i).padStart(2,"0");
 
-    if (vendidos.includes(numero)) {
+    // 🔴 vendido
+    if(vendidos.includes(i)){
       div.classList.add("vendido");
     }
 
     div.onclick = () => {
 
-      if (vendidos.includes(numero)) return;
+      if(vendidos.includes(i)) return;
 
       div.classList.toggle("selecionado");
 
-      if (div.classList.contains("selecionado")) {
-        escolhidos.push(numero);
+      if(div.classList.contains("selecionado")){
+        escolhidos.push(i);
       } else {
-        escolhidos = escolhidos.filter(n => n !== numero);
+        escolhidos = escolhidos.filter(n => n !== i);
       }
 
       document.getElementById("selecionados").innerText =
         escolhidos.length
-          ? "Você escolheu: " + escolhidos.map(n => String(n).padStart(2,"0")).join(", ")
-          : "Nenhum número selecionado";
+        ? "Você escolheu: " + escolhidos.map(n => String(n).padStart(2,"0")).join(", ")
+        : "Nenhum número selecionado";
     };
 
-    numeros.appendChild(div);
+    numerosDiv.appendChild(div);
   }
 }
 
 // botão reservar
 document.getElementById("reservar").onclick = () => {
 
-  const quantidade = escolhidos.length;
-
-  if (quantidade === 0) {
-    alert("Escolha pelo menos um número!");
+  if(!escolhidos.length){
+    alert("Escolha números!");
     return;
   }
-
-  const total = quantidade * valorNumero;
 
   const nome = document.getElementById("nome").value;
-  const telefone = document.getElementById("telefone").value;
+  const tel = document.getElementById("telefone").value;
 
-  if (nome.trim() === "" || telefone.trim() === "") {
-    alert("Preencha seu nome e WhatsApp!");
+  if(!nome || !tel){
+    alert("Preencha os dados!");
     return;
   }
 
-  const mensagem =
-`🎟️ NOVA RESERVA DE RIFA
+  const total = escolhidos.length * valorNumero;
 
-Nome: ${nome}
-WhatsApp: ${telefone}
+  const msg =
+`Nome: ${nome}
+WhatsApp: ${tel}
+Números: ${escolhidos.join(", ")}
+Total: R$ ${total}`;
 
-Números escolhidos:
-${escolhidos.map(n => String(n).padStart(2,"0")).join(", ")}
-
-Quantidade: ${quantidade}
-Total: R$ ${total.toFixed(2).replace(".", ",")}`;
-
-  window.open(
-    `https://wa.me/5573981736000?text=${encodeURIComponent(mensagem)}`,
-    "_blank"
-  );
-
-  escolhidos = [];
-
-  document.getElementById("selecionados").innerText =
-    "Nenhum número selecionado";
-
-  document.querySelectorAll(".numero").forEach(n => {
-    n.classList.remove("selecionado");
-  });
-
+  window.open(`https://wa.me/5573981736000?text=${encodeURIComponent(msg)}`);
 };
 </script>
+
 </body>
 </html>
