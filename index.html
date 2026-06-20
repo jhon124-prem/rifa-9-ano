@@ -248,6 +248,17 @@ window.open(
 "_blank"
 );
 
+document.getElementById("nome").value = "";
+document.getElementById("telefone").value = "";
+
+escolhidos = [];
+
+document.getElementById("selecionados").innerText =
+"Nenhum número selecionado";
+
+document.querySelectorAll(".numero").forEach(numero => {
+numero.classList.remove("selecionado");
+});
 
 };
 </script>
