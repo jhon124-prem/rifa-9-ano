@@ -171,13 +171,38 @@ Rifa 9º Ano • Projeto de Viagem
 <script>
 const numeros =
 document.getElementById("numeros");
+const numeros =
+document.getElementById("numeros");
+
+let escolhidos = [];
+const valorNumero = 8;
 for(let i=1;i<=100;i++){
+    document.getElementById("reservar").onclick = () => {
+
+const quantidade = escolhidos.length;
+
+if(quantidade === 0){
+alert("Escolha pelo menos um número!");
+return;
+}
+
+const total = quantidade * valorNumero;
+
+alert(
+"Você escolheu: " + escolhidos.join(", ") +
+"\n\nQuantidade: " + quantidade +
+"\nTotal: R$ " + total.toFixed(2).replace(".", ",")
+);
+
+};
 const div =
 document.createElement("div");
 div.className="numero";
 div.innerText =
 String(i).padStart(2,"0");
-let escolhidos=[];
+<button id="reservar">
+Reservar Números
+</button>
 
 div.onclick=()=>{
 
