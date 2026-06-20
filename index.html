@@ -232,17 +232,16 @@ return;
 }
 
 const mensagem =
-`Olá!
+`🎟️ NOVA RESERVA DE RIFA
 
-Gostaria de reservar os números:
+Nome: ${nome}
+WhatsApp: ${telefone}
 
+Números escolhidos:
 ${escolhidos.join(", ")}
 
 Quantidade: ${quantidade}
-Total: R$ ${total.toFixed(2).replace(".", ",")}
-
-Nome: ${nome}
-WhatsApp: ${telefone}`;
+Total: R$ ${total.toFixed(2).replace(".", ",")}`;
 
 window.open(
 `https://wa.me/5573981736000?text=${encodeURIComponent(mensagem)}`,
